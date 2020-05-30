@@ -19,18 +19,7 @@ int main()
     Effect.update_effectivity(true);
     Effect.update_effectivity(false);
     
-    std::map <int,std::string> logo;
-    for (unsigned int team = 0; team < all_teams.size(); team++)
-    {
-        std::map <int,std::string> logo;
-        for (unsigned int i = 0; i < 16; i++)
-        {
-            logo = all_teams[team]->team_trademark();
-            std::cout<<logo[i]<<std::endl;
-        }
-    }
-//    std::cout<<EVMechanics.event_possesion(false)<<std::endl;
-    //std::cin >> num;
-    
+    Sim.sim();
+
     return 0;
 }
