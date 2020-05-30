@@ -9,7 +9,7 @@ int main()
     std::vector<int> tactic;
     
     Stats.stats_setteam(true, Liverpool);
-    Stats.stats_setteam(false, Liverpool);
+    Stats.stats_setteam(false, Arsenal);
     
     tactic = Tactic.tactic_get("tst");  
     Stats.stats_upload("tactic","none",true,0,tactic);
