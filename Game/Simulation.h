@@ -32,20 +32,20 @@ class Simulation
             while (minute != 46+extended_time)
             {                
                 if (minute == 45 || minute == 90)
-//                     std::cout<<"Match was extended for "<<extended_time<<" minutes."<<std::endl; 
+                    std::cout<<"Match was extended for "<<extended_time<<" minutes."<<std::endl; 
                     
                 team = EVMechanics.event_player(EVMechanics.event_possesion(true),EVMechanics.event_possesion(false));
                 sim_event(team);
-//                 std::cout<<minute+time<<"min: "<<std::endl;
+                std::cout<<minute+time<<"min: "<<std::endl;
 
-//                 for (unsigned int i = 0; i < Match_Stats::waiting_comment.size(); i++)
-//                 {
-//                     std::cout<<Match_Stats::waiting_comment[i]<<std::endl;
-//                 }
+                for (unsigned int i = 0; i < Match_Stats::waiting_comment.size(); i++)
+                {
+                    std::cout<<Match_Stats::waiting_comment[i]<<std::endl;
+                }
                     
                 Match_Stats::waiting_comment.clear();               
                 minute++;
-                //timer(500);
+                timer(200);
             }                 
         }
       
@@ -65,7 +65,7 @@ class Simulation
                 return;
             else if (EVMechanics.event_type() && team)
             {
-//                 PEvent.event_special();
+                PEvent.event_special();
                 return; //ADD: player event loop
             }
             else
@@ -97,9 +97,9 @@ class Simulation
         void sim()
         {
             sim_half(0);
-//             std::cout<<"\n"<<"HALFTIME"<<"\n"<<std::endl;
+            std::cout<<"\n"<<"HALFTIME"<<"\n"<<std::endl;
             sim_half(45);
-//             std::cout<<"\n"<<"END RESULTS"<<"\n"<<std::endl;
+            std::cout<<"\n"<<"END RESULTS"<<"\n"<<std::endl;
             
             // Looping through nested maps
             std::map <bool, std::map <std::string, int> >::iterator outerit;
