@@ -5,6 +5,7 @@
 //     std::vector<std::string> attacking = {"LS", "CS", "CF", "RS", "LW", "RW", "ST", "LM", "RM"};
 //     std::vector<std::string> midfielding = {"LAM", "CAM", "RAM", "LCM", "CM", "RCM", "LDM", "CDM", "RDM"};
 //     std::vector<std::string> defending = {"LWB", "CDM", "RWB", "LB", "LCB", "CB", "RCB", "RB", "SW"};
+
 //////////////////
 /* Team Arsenal */
 //////////////////
@@ -50,8 +51,7 @@ std::vector<Player> ArsenalSub
     {"S. Kolašinac","Bosnia Herzegovina",26,183,85,31,"SUB",75,62,72,73,75,87,20,20,20,20,0},
     {"S. Mustafi","Germany",27,184,82,20,"SUB",60,57,63,61,77,77,20,20,20,20,0},
     {"K. Tierney","Scotland",22,178,78,3,"SUB",88,59,70,74,71,81,20,20,20,20,0},
-    {"R. Holding","England",23,189,75,16,"SUB",60,34,59,64,77,73,20,20,20,20,0}
-    
+    {"R. Holding","England",23,189,75,16,"SUB",60,34,59,64,77,73,20,20,20,20,0} 
 };
 std::vector<Player> ArsenalSuspended;
 std::shared_ptr<Team> Arsenal = std::make_shared<Team>("Arsenal F.C", "Premier League", "Mikel Arteta", ArsenalLogo, ArsenalField, ArsenalSub, ArsenalSuspended);
@@ -79,6 +79,7 @@ std::map <int,std::string> LiverpoolLogo =
     {14,"  `.`. -+o/+++o/+/|o+:``.``   "},
     {15,"       ./::::---::/|-.        "} 
 };
+
 std::vector<Player> LiverpoolField
 {
     {"V. van Dijk","Netherlands",27,193,92,4,"MI",77,60,70,71,90,86,20,20,20,20,0},
@@ -105,8 +106,113 @@ std::vector<Player> LiverpoolSub
 };
 std::vector<Player> LiverpoolSuspended;
 std::shared_ptr<Team> Liverpool = std::make_shared<Team>("Liverpool F.C", "Premier League", "Jorgen Klopp", LiverpoolLogo, LiverpoolField, LiverpoolSub, LiverpoolSuspended);
-//std::shared_ptr<Team> PLiverpool = std::make_shared<Team>(Liverpool);
 
-std::vector<std::shared_ptr<Team>> all_teams = {Arsenal,Liverpool};
+///////////////////////
+/* Manchester United */
+///////////////////////
+
+std::map <int,std::string> ManchesterLogo = 
+{   
+    { 0,"                             "},
+    { 1,"      ::/sooysoss/::-::      "},
+    { 2,"    -:+syyyhsyysyys+:::--    "},
+    { 3,"  -:/:osyosossossosossso/--  "},
+    { 4," :+osooooso+/////osoo++oso+: "},
+    { 5," -oo+/+//+o+//////o+//o+/oo- "},
+    { 6," -+so+- -::::///::::- -/++/. "},
+    { 7," -++-o:  |:+o/o+:/.|  '.:+-. "},
+    { 8," -+++o:  |:+o+o+:/-|  ..:--. "},
+    { 9," :+++o.  |//+shyo+.|  .---:- "},
+    {10,"  -/ys+-:///shyso//:-+sys:-  "},
+    {11,"  .:yhhhyo++++/+o++syhhhs:.  "},
+    {12,"   -+yhossoyssysyoyosyy+-.   "},
+    {13,"    -/osyssyohsshsys+/-..    "},
+    {14,"       ..-/++osos+o+-.       "},
+    {15,"                             "},
+}; 
+ 
+std::vector<Player> ManchesterField
+{
+    {"De Gea","Spain",28,192,82,1,"GK",20,20,20,20,20,20,92,90,84,85,0},
+    {"P. Pogba","France",26,191,84,6,"MI",74,81,86,85,66,86,20,20,20,20,0},
+    {"A. Martial","France",23,184,76,9,"AT",89,81,72,86,41,71,20,20,20,20,0},
+    {"M. Rashford","England",21,186,70,10,"AT",92,82,73,84,45,77,20,20,20,20,0},
+    {"H. Maguire","England",26,194,100,5,"DE",50,53,64,69,81,84,20,20,20,20,0},
+    {"J. Lingard","England",26,175,62,14,"MI",80,78,76,83,58,72,20,20,20,20,0},
+    {"V. Lindelof","Sweden",24,187,80,2,"DE",74,50,72,72,82,78,20,20,20,20,0},
+    {"L. Shaw","England",23,181,75,23,"DE",82,54,75,80,80,78,20,20,20,20,0},
+    {"A. Wan-Bissaka","England",21,183,72,29,"DE",87,50,63,78,80,72,20,20,20,20,0},
+    {"S. McTominay","Scotland",22,193,88,39,"MI",61,65,72,72,74,80,20,20,20,20,0},
+    {"Andreas Pereira","Brazil",23,178,71,15,"AT",73,74,78,78,66,69,20,20,20,20,0},
+};
+std::vector<Player> ManchesterSub
+{
+    {"Juan Mata","Spain",31,170,63,8,"SUB",62,74,83,83,36,47,20,20,20,20,0},
+    {"A. Sanchez","Chile",30,169,62,7,"SUB",81,78,77,85,44,73,20,20,20,20,0},
+    {"S. Romero","Argentina",32,192,86,22,"SUB",20,20,20,20,20,20,83,79,76,79,0},
+    {"C. Smalling","England",29,194,81,12,"SUB",69,47,58,58,79,81,20,20,20,20,0},
+    {"Fred","Brazil",26,169,64,17,"SUB",76,73,75,80,74,69,20,20,20,20,0},
+    {"A. Young","England",33,175,65,18,"SUB",70,66,74,75,73,71,20,20,20,20,0}
+};
+std::vector<Player> ManchesterSuspended;
+std::shared_ptr<Team> Manchester = std::make_shared<Team>("Manchester United F.C.", "Premier League", "Ole Gunnar Solskjaer", ManchesterLogo, ManchesterField, ManchesterSub, ManchesterSuspended);
+
+
+std::vector<std::shared_ptr<Team>> all_teams = {Arsenal,Liverpool,Manchester};
+
+std::shared_ptr<Team> Team_A;     
+std::shared_ptr<Team> Team_B;   
+
 
 #endif /* DATA_H_INCLUDED */
+
+
+// ///////////////////////
+// /* Manchester United */
+// ///////////////////////
+
+// std::map <int,std::string> ManchesterLogo = 
+// {   
+//     { 0,"                             "},
+//     { 1,"      ::/sooysoss/::-::      "},
+//     { 2,"    -:+syyyhsyysyys+:::--    "},
+//     { 3,"  -:/:osyosossossosossso/--  "},
+//     { 4," :+osooooso+/////osoo++oso+: "},
+//     { 5," -oo+/+//+o+//////o+//o+/oo- "},
+//     { 6," -+so+- -::::///::::- -/++/. "},
+//     { 7," -++-o:  |:+o/o+:/.|  '.:+-. "},
+//     { 8," -+++o:  |:+o+o+:/-|  ..:--. "},
+//     { 9," :+++o.  |//+shyo+.|  .---:- "},
+//     {10,"  -/ys+-:///shyso//:-+sys:-  "},
+//     {11,"  .:yhhhyo++++/+o++syhhhs:.  "},
+//     {12,"   -+yhossoyssysyoyosyy+-.   "},
+//     {13,"    -/osyssyohsshsys+/-..    "},
+//     {14,"       ..-/++osos+o+-.       "},
+//     {15,"                             "},
+// }; 
+ 
+// std::vector<Player> ManchesterField
+// {
+//     {"De Gea","Spain",28,192,82,1,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"P. Pogba","France",26,191,84,6,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"A. Martial","France",23,184,76,9,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"M. Rashford","England",21,186,70,10,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"H. Maguire","England",26,194,100,5,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"J. Lingard","England",26,175,62,14,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"V. Lindelof","Sweden",24,187,80,2,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"L. Shaw","England",23,181,75,23,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"A. Wan-Bissaka","England",21,183,72,29,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"S. McTominay","Scotland",22,193,88,39,"DE",99,99,99,99,99,99,99,99,99,99,0},
+//     {"Andreas Pereira","Brazil",23,178,71,15,"DE",99,99,99,99,99,99,99,99,99,99,0},
+// };
+// std::vector<Player> ManchesterSub
+// {
+//     {"Juan Mata","Spain",31,170,63,8,"SUB",62,74,83,83,36,47,20,20,20,20,0},
+//     {"A. Sanchez","Chile",30,169,62,7,"SUB",81,78,77,85,44,73,20,20,20,20,0},
+//     {"S. Romero","Argentina",32,192,86,22,"SUB",20,20,20,20,20,20,83,79,76,79,0},
+//     {"C. Smalling","England",29,194,81,12,"SUB",69,47,58,58,79,81,20,20,20,20,0},
+//     {"Fred","Brazil",26,169,64,17,"SUB",76,73,75,80,74,69,20,20,20,20,0},
+//     {"A. Young","England",33,175,65,18,"SUB",70,66,74,75,73,71,20,20,20,20,0}
+// };
+// std::vector<Player> ManchesterSuspended;
+// std::shared_ptr<Team> Manchester = std::make_shared<Team>("Manchester United F.C.", "Premier League", "Ole Gunnar Solskjaer", ManchesterLogo, ManchesterField, ManchesterSub, ManchesterSuspended);

@@ -179,6 +179,95 @@ class Match_Stats
      {
          return tactic[team];
      }
+
+     void reset()
+     {
+        event_lib =
+        {
+            { true, {{"penalty", 0},
+                    {"cornerkick", 0},
+                    {"offside", 0},
+                    {"out", 0},
+                    {"attempt", 0},
+                    {"shotongoal", 0},
+                    {"injury", 0},
+                    {"goal", 0},
+                    {"foul", 0},
+                    {"yellow", 0},
+                    {"red", 0}}
+            },
+            { false,{{"penalty", 0},
+                    {"cornerkick", 0},
+                    {"offside", 0},
+                    {"out", 0},
+                    {"attempt", 0},
+                    {"shotongoal", 0},
+                    {"injury", 0},
+                    {"goal", 0},
+                    {"foul", 0},
+                    {"yellow", 0},
+                    {"red", 0}}
+            }
+        };
+
+        card_lib =
+        {
+            {"yellow",  {{true,  {} },
+                        {false, {} }}
+            },
+            {"red",     {{true,  {} },
+                        {false, {} }}
+            }
+        };  
+
+        play_team = {};
+        effectivity_bonus = 
+        { 
+            {true, {{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            },
+            {false,{{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            }
+        };
+
+        effectivity_penalty = 
+        { 
+            {true, {{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            },
+            {false,{{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            }
+        };
+        effectivity_fields =
+        { 
+            {true, {{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            },
+            {false,{{"AT",0},
+                    {"MI",0},
+                    {"DE",0},
+                    {"GK",0}}
+            }
+        };
+        tactic = 
+        {
+            {true,  {}},
+            {false, {}}
+        };
+        waiting_comment = {};
+     }
 };
 
 std::map< bool, std::map <std::string, int> > Match_Stats::event_lib =
@@ -272,6 +361,7 @@ std::string Match_Stats::player_event_option_C;
 std::string Match_Stats::player_event_option_D;
 std::string Match_Stats::player_event_question;
 std::string Match_Stats::player_event_type;
+
 Match_Stats Stats;
  
 #endif /* MATCHSTATS_H_INCLUDED */

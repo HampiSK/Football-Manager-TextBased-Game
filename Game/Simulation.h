@@ -193,6 +193,8 @@ class Simulation
         {
             Team_A.reset();     
             Team_B.reset();
+            Stats.reset();
+            
             while (!event_log.empty())
             {            
                 std::string q_element = event_log.front();
