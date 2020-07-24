@@ -8,6 +8,8 @@ Unfortunately, I'm working on other projects so I don't have time to finish this
 
 ### Compile
 
+This game is working as Win32 Application, sorry Linux :(
+
 ```
 g++ --std=c++11 -g ./Main.cpp
 ```
