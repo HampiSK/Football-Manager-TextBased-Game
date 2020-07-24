@@ -107,14 +107,14 @@ private:
          * "card_doubleyellow" or "card_red" map. When player was in "card_yellow" map before, player gets
          * deleted. 
          * 
-         * Comments are also uploaded from this method */
+         * Comments are also uploaded from this class */
          
         if (card == "yellow")
         {
             if (card_yellow[team].size() == 0)
             {
                // Upload comment
-               Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_YELLOW",name));   
+               Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_YELLOW"));   
                card_add("yellow",team,name);
             }
             else
@@ -127,7 +127,7 @@ private:
                         card_delete("yellow",team,name);
                         
                         // Upload comment
-                        Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_DOUBLE_YELLOW",name));
+                        Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_DOUBLE_YELLOW"));
                         
                         // Suspend player
                         std::shared_ptr<Team> modify_team = Stats.stats_getteam(team);
@@ -135,7 +135,7 @@ private:
                         return;
                     }
                 }               
-                Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_YELLOW",name));
+                Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_YELLOW"));
                 card_add("yellow",team,name);
             }
         }
@@ -150,7 +150,7 @@ private:
                     if (card_yellow[team][i] == name)
                     {             
                         // Upload comment
-                        Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_DOUBLE_YELLOW",name));
+                        Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_DOUBLE_YELLOW"));
                         card_delete("yellow",team,name);
                         break;
                     }
@@ -159,7 +159,7 @@ private:
             else
             {
                // Upload comment
-               Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_RED",name));
+               Match_Stats::waiting_comment.push_back(Comment.comment_get("FOUL_RED"));
             }
             // Suspend player
             std::shared_ptr<Team> modify_team = Stats.stats_getteam(team);

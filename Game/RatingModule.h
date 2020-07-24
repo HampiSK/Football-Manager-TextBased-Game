@@ -95,7 +95,7 @@ class Classification
         
         int rating_overall(std::string field,int toal_players,int average_skill)
         {
-        /* Couting overall skill of passed football field */
+        /* Couting overall rating of passed football field */
         
             int bonus;
             
@@ -132,7 +132,9 @@ class Effectivity
         {
         /* Calculate field effectivity for "AT", "MI", "DE" and "GK"  
          * actual = actual effectivity of players on football field
-         * default = effectivity of players on football field without bonuses and penalties */
+         * default = effectivity of players on football field without bonuses and penalties 
+         * normalized = effectivity of players on football field without bonuses and penalties bud effectivity is "normalized"
+         *              for player on scale 0-100 */
         
             std::string field;
             int pace;
@@ -180,13 +182,21 @@ class Effectivity
             }
             
             
-            if (operation == "default")
+            if (operation == "default" || operation == "normalized")
             {
                 // Calculate overall field effectivity without added bonuses and penalties
                 attack     = (Rating.rating_overall("AT",field_Temp.size(),attack));
                 midfield   = (Rating.rating_overall("MI",field_Temp.size(),midfield));
                 defend     = (Rating.rating_overall("DE",field_Temp.size(),defend));
-                goalkeeper = (Rating.rating_overall("GK",field_Temp.size(),goalkeeper));      
+                goalkeeper = (Rating.rating_overall("GK",field_Temp.size(),goalkeeper));  
+
+                if (operation == "normalized")
+                {
+                    attack = (attack*100) / 2090; // maximum effectivity which you can get in attacking field
+                    midfield = (midfield*100) / 1980; // maximum effectivity which you can get in midfield field
+                    defend = (defend*100) / 1980; // maximum effectivity which you can get in defending field
+                    goalkeeper = (goalkeeper*100) / 100; // maximum effectivity which you can get as a goalkeeper
+                }
                 return std::vector<int> {attack,midfield,defend,goalkeeper};
             }
             else if (operation == "actual")
@@ -202,18 +212,20 @@ class Effectivity
             }      
         }
     public:
-        std::vector<int> get_default_effectivity(bool team)
+        std::vector<int> get_default_effectivity(bool team, std::string operation = "default")
         {
-        /* Return field effectivity of "AT", "MI", "DE" and "GK" on football field without bonuses */      
-            return calculate_effectivity(team, "default");
+        /* Return field effectivity of "AT", "MI", "DE" and "GK" on football field without bonuses.
+         * Default effectivity is calculated withoud passing any second parameter.
+         * Use "Stats.stats_setteam" before using this mehthod as it needs to be uploaded. */      
+            return calculate_effectivity(team, operation);
         }
         
         void update_effectivity(bool team)
         {
-        /* Update field effectivity for "AT", "MI", "DE" and "GK" on football field */
-        
+        /* Update field effectivity for "AT", "MI", "DE" and "GK" on football field
+         * Use "Stats.stats_setteam" before using this mehthod as it needs to be uploaded. */
             std::vector<int> effectivity = calculate_effectivity(team, "actual");
-            
+
             // upload new data            
             Stats.stats_upload("effectivity","AT",team,effectivity[0]);
             Stats.stats_upload("effectivity","MI",team,effectivity[1]);

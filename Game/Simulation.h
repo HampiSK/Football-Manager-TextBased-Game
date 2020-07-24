@@ -6,6 +6,10 @@
 class Simulation
 {
     private:
+        bool running = true;
+
+        std::queue<std::string> event_log;
+
         void timer(int milliseconds)
         {
            auto start = std::chrono::steady_clock::now();
@@ -18,12 +22,93 @@ class Simulation
                break;
            }
         }    
+        void team_stats(bool team)
+        {
+            std::string name = Stats.stats_getteam(team)->team_bio("name");
+            std::vector<int> text_coord;
+
+            int column = 0;
+            int row = -9;
+
+            if (team)
+                text_coord = { -2,4,-32 }; // Coordinations for Team_A
+            else
+                text_coord = { 2,4,15 }; // Coordinations for Team_B
+
+            // Assign coordinations of displayed text on screen
+            int menu_goal  = text_coord[0];
+            int menu_team  = text_coord[1];
+            int menu_stats = text_coord[2];
+
+            if (team)
+            {
+                column -= name.size();
+                Main_Window.text(column - menu_team, -13, name, 7);
+            } 
+            else  
+                Main_Window.text(menu_team, -13, name, 7);
+
+            Main_Window.text(0 , -13, ":", 7);
+
+            // Looping through nested maps
+            std::map <bool, std::map <std::string, int> >::iterator outerit;
+            std::map <std::string, int>::iterator innerit;
+
+            for (outerit = Match_Stats::event_lib.begin(); outerit != Match_Stats::event_lib.end(); ++outerit)
+            {             
+                if (team == outerit->first)
+                {
+                    for (innerit = outerit->second.begin(); innerit != outerit->second.end(); ++innerit)
+                    {
+                        if (innerit->first == "goal" && outerit->first == team)
+                        {
+                            Main_Window.text(menu_goal, -13, innerit->second, 7);
+                        }
+                        else
+                        {
+                            Main_Window.text(menu_stats , row, innerit->first, 7);
+                            Main_Window.text(menu_stats  + 12, row, innerit->second, 7);
+                            row++;
+                        }
+                    }
+                }
+            }            
+        }
+        void event_viewer(std::string text)
+        {
+            int line = 4;
+
+            system("cls");
+            
+            team_stats(true);
+            team_stats(false);
+
+            if (event_log.size() >= 8)
+            {
+                event_log.pop();
+                event_log.push(text);
+            }
+            else
+                event_log.push(text);
+            
+            std::queue<std::string> temp_log = event_log; //copy the original queue to the temporary queue
+
+            while (!temp_log.empty())
+            {            
+                std::string q_element = temp_log.front();
+                Main_Window.text(-32, line, q_element, 7);
+                line++;
+                temp_log.pop();
+            }         
+        }
+
         void sim_half(int time)
         {
             int minute = 0;
+            int speed = 200;
             bool team;
-            int extended_time;
-            
+            int extended_time;           
+
             if (time > 0)
                 extended_time = rand() % 5;
             else
@@ -31,21 +116,31 @@ class Simulation
 
             while (minute != 46+extended_time)
             {                
+                Main_Window.WindowBuffer();
+                buttons();
+                       
+                if (Button.backspace_state)
+                {
+                    system("cls");    
+                    running = false;           
+                    return;
+                }
+
                 if (minute == 45 || minute == 90)
-                    std::cout<<"Match was extended for "<<extended_time<<" minutes."<<std::endl; 
+                    event_viewer("Match was extended for " + std::to_string(extended_time) + " minutes.");
                     
                 team = EVMechanics.event_player(EVMechanics.event_possesion(true),EVMechanics.event_possesion(false));
                 sim_event(team);
-                std::cout<<minute+time<<"min: "<<std::endl;
+                event_viewer(std::to_string(minute+time) + "min: ");
 
                 for (unsigned int i = 0; i < Match_Stats::waiting_comment.size(); i++)
                 {
-                    std::cout<<Match_Stats::waiting_comment[i]<<std::endl;
+                    event_viewer(Match_Stats::waiting_comment[i]);
                 }
                     
                 Match_Stats::waiting_comment.clear();               
                 minute++;
-                timer(200);
+                timer(speed);
             }                 
         }
       
@@ -65,7 +160,7 @@ class Simulation
                 return;
             else if (EVMechanics.event_type() && team)
             {
-                PEvent.event_special();
+//                 PEvent.event_special();
                 return; //ADD: player event loop
             }
             else
@@ -93,26 +188,54 @@ class Simulation
                 }
             }
         }
-    public:      
+    public:     
+        void reset()
+        {
+            Team_A.reset();     
+            Team_B.reset();
+            while (!event_log.empty())
+            {            
+                std::string q_element = event_log.front();
+                event_log.pop();
+            }   
+        } 
+
         void sim()
         {
-            sim_half(0);
-            std::cout<<"\n"<<"HALFTIME"<<"\n"<<std::endl;
-            sim_half(45);
-            std::cout<<"\n"<<"END RESULTS"<<"\n"<<std::endl;
-            
-            // Looping through nested maps
-            std::map <bool, std::map <std::string, int> >::iterator outerit;
-            std::map <std::string, int>::iterator innerit;
+            Render_State.load = true; 
+            running = true;
+            int time = 0;
 
-            for (outerit = Match_Stats::event_lib.begin(); outerit != Match_Stats::event_lib.end(); ++outerit)
+            while (running)
             {
-                std::cout<<outerit->first<<std::endl;
-                for (innerit = outerit->second.begin(); innerit != outerit->second.end(); ++innerit)
+                Main_Window.WindowBuffer();                
+                buttons();
+                       
+                if (Button.backspace_state)
                 {
-                    std::cout<<innerit->first<<": "<<innerit->second<<" | ";
+                    system("cls");   
+                    running = false;   
+                    return;
                 }
-                std::cout<<""<<std::endl;
+
+                if (time < 46)
+                {
+                    sim_half(time);
+                    if (time == 0)
+                    {
+                        event_viewer(" ");
+                        event_viewer("HALFTIME");
+                        event_viewer(" "); 
+                        time += 45;               
+                    }
+                    else if (time == 45)
+                    {
+                        event_viewer(" ");
+                        event_viewer("END OF THE MATCH");
+                        event_viewer(" ");  
+                        time += 45; 
+                    }
+                }                              
             }
         }
 };
